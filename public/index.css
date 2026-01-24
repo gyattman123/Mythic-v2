@@ -488,6 +488,10 @@ footer {
   height: auto;
 }
  
+.logo {
+  width: max(104px, 11vw);
+  height: auto;
+}
 
 
 
