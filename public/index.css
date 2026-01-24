@@ -530,7 +530,7 @@ body {
 
 /* Logo scales with screen (THIS is the fix you wanted) */
 .logo {
-  width: clamp(80px, 8vw, 140px);
+  width: clamp(120px, 14vw, 240px);
   height: auto;
 }
 
