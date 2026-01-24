@@ -552,4 +552,20 @@ footer {
   margin-top: auto;
 }
 
+.logo {
+  width: clamp(110px, 12vw, 210px);
+  height: auto;
+}
+
+.hero h1 {
+  font-size: clamp(22px, 2.6vw, 36px);
+  margin-bottom: 4px;
+}
+
+.hero p {
+  font-size: clamp(14px, 1.2vw, 16px);
+  max-width: 560px;
+  line-height: 1.45;
+}
+
 
