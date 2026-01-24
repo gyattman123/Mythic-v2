@@ -468,4 +468,26 @@ footer {
   padding-bottom: clamp(12px, 2vh, 24px);
 }
 
+.logo-wrapper h1 {
+  white-space: nowrap;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: nowrap;
+}
+
+.logo-wrapper h1 {
+  flex-shrink: 0;
+}
+
+.logo {
+  width: clamp(64px, 6vw, 96px);
+  height: auto;
+}
+ 
+
+
 
