@@ -592,28 +592,34 @@ footer::before {
   display: none !important;
 }
 /* LOOOOOLOLLLLLLLL */
-body::before {
-  content: "";
+.bg {
   position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(90,120,255,0.12), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(120,80,255,0.10), transparent 45%),
-    radial-gradient(circle at 50% 80%, rgba(60,90,200,0.08), transparent 50%);
-  animation: bg-drift 18s ease-in-out infinite alternate;
+  inset: -5%;
   z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 60%),
+    linear-gradient(120deg, #0b1020, #14162a, #0b1020);
+
+  background-size: 200% 200%;
+  animation: bgMove 18s ease-in-out infinite;
 }
 
-@keyframes bg-drift {
-  0% {
-    filter: blur(0px);
-    transform: translate(0, 0);
-  }
-  100% {
-    filter: blur(2px);
-    transform: translate(-2%, -3%);
-  }
+@keyframes bgMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+
 
 
 
