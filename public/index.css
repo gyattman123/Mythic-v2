@@ -568,4 +568,27 @@ footer {
   line-height: 1.45;
 }
 
+/* ============================= */
+/* Minimal footer (final)       */
+/* ============================= */
+
+.footer-minimal {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+
+  padding: 0;
+  margin: 0;
+
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Kill any old footer decorations */
+footer::before {
+  display: none !important;
+}
 
