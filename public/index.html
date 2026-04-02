@@ -10,11 +10,13 @@
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap"
         rel="stylesheet"
     />
-    <link rel="stylesheet" href="index.css" />
+   <script src="/scram/scramjet.all.js"></script>
+   <script src="/baremux/index.js"></script>
 
-    <!-- Scramjet / BareMux scripts for original logic -->
-    <script src="/scram/scramjet.all.js"></script>
-    <script src="/baremux/index.js"></script>
+	<link rel="stylesheet" href="index.css" />
+	<script src="register-sw.js" defer></script>
+	<script src="search.js" defer></script>
+	<script src="index.js" defer></script>
 </head>
 <body>
 
@@ -53,33 +55,7 @@
                     placeholder="Do what you want!"
                     autocomplete="off"
                 />
-            </form>
-
-            <div class="desc left-margin">
-                <p id="sj-error"></p>
-                <pre id="sj-error-code"></pre>
-            </div>
-        </div>
-        <form id="sj-form">
-			<input
-				id="sj-search-engine"
-				value="https://www.google.com/search?q=%s"
-				type="hidden"
-			/>
-			<input
-				id="sj-address"
-				type="text"
-				placeholder="Do what you want!"
-				autocomplete="off"
-			/>
-		</form>
-
-		<div class="desc left-margin">
-			<p id="sj-error"></p>
-			<pre id="sj-error-code"></pre>
-		</div>
-
-
+  
         <!-- App Grid -->
         <div class="app-grid animate-in delay-2" id="app-grid"></div>
 
