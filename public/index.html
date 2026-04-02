@@ -150,6 +150,37 @@ window.addEventListener("load", () => {
     });
 });
 </script>
+<script>
+window.addEventListener("load", async () => {
+    console.log("Checking Scramjet...");
+
+    // Wait a bit in case scripts are still loading
+    await new Promise(r => setTimeout(r, 500));
+
+    console.log("scramjet:", window.scramjet);
+
+    if (!window.scramjet) {
+        console.error("Scramjet failed to load.");
+        return;
+    }
+
+    const form = document.getElementById("sj-form");
+    const input = document.getElementById("sj-address");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const query = input.value.trim();
+        if (!query) return;
+
+        try {
+            await window.scramjet.route(query);
+        } catch (err) {
+            console.error("Routing failed:", err);
+        }
+    });
+});
+</script>
 
 </body>
 </html>
