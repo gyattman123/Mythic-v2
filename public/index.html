@@ -22,8 +22,7 @@
     <script src="/baremux/index.js"></script>
     <script src="register-sw.js" defer></script>
     <script src="search.js" defer></script>
-	<script src="index.js" defer></script>
-    
+    <script src="index.js" defer></script>
 </head>
 <body>
 
@@ -39,13 +38,6 @@
         <source src="/wallpaper.mp4" type="video/mp4" />
     </video>
 
-    <!-- Hidden Scramjet search template -->
-    <input
-        id="sj-search-engine"
-        type="hidden"
-        value="https://www.google.com/search?q=%s"
-    />
-
     <!-- Start Page -->
     <div id="start-page">
         <!-- Clock -->
@@ -54,8 +46,13 @@
             <div class="clock-date" id="clock-date">LOADING SYSTEM</div>
         </div>
 
-        <!-- Search Bar -->
-        <div class="search-container animate-in delay-1">
+        <!-- Search Bar (Scramjet compatible) -->
+        <form id="sj-form" class="search-container animate-in delay-1">
+            <input
+                type="hidden"
+                id="sj-search-engine"
+                value="https://www.google.com/search?q=%s"
+            />
             <div class="search-pill">
                 <i
                     class="ph ph-magnifying-glass"
@@ -63,8 +60,8 @@
                 ></i>
                 <input
                     type="text"
-                    class="search-input"
                     id="sj-address"
+                    class="search-input"
                     placeholder="Search the web or enter URL..."
                     autocomplete="off"
                 />
@@ -72,7 +69,7 @@
                     <i class="ph ph-spinner ph-spin"></i>
                 </div>
             </div>
-        </div>
+        </form>
 
         <!-- App Grid -->
         <div class="app-grid animate-in delay-2" id="app-grid"></div>
@@ -102,15 +99,6 @@
         if (dateEl) dateEl.textContent = dateString;
     }
 
-    // --- SEARCH HANDLING (Scramjet integration) ---
-    function handleSearch(val) {
-        if (!val) return;
-
-        const template = document.getElementById("sj-search-engine").value || "https://www.google.com/search?q=%s";
-        const searchUrl = template.replace("%s", encodeURIComponent(val));
-        window.location.href = searchUrl;
-    }
-
     // --- APP GRID ---
     function renderApps() {
         const grid = document.getElementById("app-grid");
@@ -133,20 +121,9 @@
         renderApps();
         updateClock();
         setInterval(updateClock, 1000);
-
-        // Bind search input
-        const searchInput = document.getElementById("home-search");
-        if (searchInput) {
-            searchInput.addEventListener("keypress", (e) => {
-                if (e.key === "Enter") {
-                    handleSearch(e.target.value);
-                    e.target.value = "";
-                    e.preventDefault();
-                }
-            });
-            searchInput.addEventListener("focus", function() { this.select(); });
-        }
+        // No extra search JS needed — Scramjet handles #sj-form automatically
     };
     </script>
+
 </body>
 </html>
