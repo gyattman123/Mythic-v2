@@ -10,7 +10,7 @@
 
         <script defer src="/analytics.js" data-website-id="ece2a32c-e3fc-4ccf-8ab4-43186e9857b8"></script>
 
-        <!-- Scramjet (from working version) -->
+        <!-- Scramjet -->
         <script src="/scram/scramjet.all.js"></script>
         <script src="/baremux/index.js"></script>
 
@@ -47,7 +47,6 @@
                 <div class="clock-date" id="clock-date">LOADING SYSTEM</div>
             </div>
 
-            <!-- Search — using exact Scramjet IDs from working version -->
             <div class="search-container animate-in delay-1">
                 <form id="sj-form">
                     <input id="sj-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
@@ -63,22 +62,16 @@
                             placeholder="Search the web or enter URL..."
                             autocomplete="off"
                         />
-                        <div id="loading-indicator" style="display: none">
-                            <i class="ph ph-spinner ph-spin"></i>
-                        </div>
                     </div>
                 </form>
-                <div style="display:none">
-                    <p id="sj-error"></p>
-                    <pre id="sj-error-code"></pre>
-                </div>
+                <p id="sj-error" style="color:red;font-size:0.8rem;margin-top:0.4rem;"></p>
+                <pre id="sj-error-code" style="color:red;font-size:0.7rem;"></pre>
             </div>
 
             <div class="app-grid animate-in delay-2" id="app-grid"></div>
         </div>
 
         <script>
-// --- CORE DATA ---
 const defaultApps = [
     { name: "DuckDuckGo", icon: "ph-globe", url: "https://duckduckgo.com" },
     { name: "Wikipedia", icon: "ph-book-open", url: "https://en.m.wikipedia.org" },
@@ -88,31 +81,25 @@ const defaultApps = [
     { name: "Reddit", icon: "ph-reddit-logo", url: "https://reddit.com" },
 ];
 
-// --- INITIALIZATION ---
 window.onload = () => {
     renderApps();
     updateClock();
     setInterval(updateClock, 1000);
 };
 
-// --- CLOCK & DATE ---
 function updateClock() {
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     const dateString = now.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
-
     const timeEl = document.getElementById("clock-time");
     const dateEl = document.getElementById("clock-date");
-
     if (timeEl) timeEl.textContent = timeString;
     if (dateEl) dateEl.textContent = dateString;
 }
 
-// --- APPS ---
 function renderApps() {
     const grid = document.getElementById("app-grid");
     if (!grid) return;
-
     defaultApps.forEach((app) => {
         const el = document.createElement("div");
         el.className = "app-shortcut";
@@ -127,5 +114,3 @@ function renderApps() {
         </script>
     </body>
 </html>
-
-
