@@ -1,118 +1,143 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mythic</title>
-
-    <!-- Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="index.css" />
-
-    <!-- Scramjet (UNCHANGED) -->
-    <script src="/scram/scramjet.all.js"></script>
-    <script src="/baremux/index.js"></script>
-    <script src="register-sw.js" defer></script>
-    <script src="search.js" defer></script>
-    <script src="index.js" defer></script>
-</head>
-
-<body>
-
-<!-- Background -->
-<video id="wallpaper-default" autoplay loop muted playsinline>
-    <source src="/wallpaper.mp4" type="video/mp4" />
-</video>
-
-<!-- UI -->
-<div id="start-page">
-
-    <!-- Clock -->
-    <div class="clock-container">
-        <div id="clock-time">00:00</div>
-        <div id="clock-date">LOADING SYSTEM</div>
-    </div>
-
-    <!-- 🔥 THIS IS THE IMPORTANT PART -->
-    <!-- EXACT SAME STRUCTURE AS WORKING VERSION -->
-    <form id="sj-form">
-
-        <!-- REQUIRED -->
-        <input
-            id="sj-search-engine"
-            value="https://www.google.com/search?q=%s"
-            type="hidden"
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mythic</title>
+        <script src="https://unpkg.com/@phosphor-icons/web"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap"
+            rel="stylesheet"
         />
 
-        <!-- YOUR STYLED INPUT -->
-        <div class="search-pill">
-            <i class="ph ph-magnifying-glass"></i>
+        <link rel="stylesheet" href="index.css" />
+    </head>
+    <body>
+        <!-- Cinematic Grain for Texture -->
 
-            <input
-                id="sj-address"
-                type="text"
-                placeholder="Search the web or enter URL..."
-                autocomplete="off"
-            />
+        <!-- Backgrounds -->
+        <video
+            id="wallpaper-default"
+            class="wallpaper-layer"
+            autoplay
+            loop
+            muted
+            playsinline
+        >
+            <source src="/wallpaper.mp4" type="video/mp4" />
+        </video>
+
+        <!-- Start Page -->
+        <div id="start-page">
+            <div class="clock-container animate-in">
+                <div class="clock-time" id="clock-time">00:00</div>
+                <div class="clock-date" id="clock-date">LOADING SYSTEM</div>
+            </div>
+
+            <div class="search-container animate-in delay-1">
+                <div class="search-pill">
+                    <i
+                        class="ph ph-magnifying-glass"
+                        style="font-size: 1.4rem; color: var(--accent-primary)"
+                    ></i>
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="home-search"
+                        placeholder="Search the web or enter URL..."
+                        autocomplete="off"
+                    />
+                    <div id="loading-indicator" style="display: none">
+                        <i class="ph ph-spinner ph-spin"></i>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="app-grid animate-in delay-2" id="app-grid"></div>
+
+
+                
+            </div>
         </div>
 
-    </form>
+     
+        
 
-    <!-- Apps -->
-    <div id="app-grid"></div>
+       
 
-</div>
-
-<script>
-// CLOCK
-function updateClock() {
-    const now = new Date();
-    document.getElementById("clock-time").textContent =
-        now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-    document.getElementById("clock-date").textContent =
-        now.toLocaleDateString(undefined, {
-            weekday: "long",
-            month: "long",
-            day: "numeric"
-        });
-}
-
-// APPS
-const apps = [
+        <script>
+// --- CORE DATA ---
+const defaultApps = [
     { name: "DuckDuckGo", icon: "ph-globe", url: "https://duckduckgo.com" },
-    { name: "Wikipedia", icon: "ph-book-open", url: "https://en.m.wikipedia.org" }
+    { name: "Wikipedia", icon: "ph-book-open", url: "https://en.m.wikipedia.org" },
+    { name: "VS Code", icon: "ph-code", url: "https://vscode.dev" },
+    { name: "Music", icon: "ph-music-notes", url: "https://soundcloud.com" },
+    { name: "Gaming", icon: "ph-game-controller", url: "https://poki.com" },
+    { name: "Reddit", icon: "ph-reddit-logo", url: "https://reddit.com" },
 ];
 
+// --- INITIALIZATION ---
+window.onload = () => {
+    renderApps();
+    updateClock();
+    setInterval(updateClock, 1000);
+};
+
+// --- CLOCK & DATE ---
+function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const dateString = now.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
+
+    const timeEl = document.getElementById("clock-time");
+    const dateEl = document.getElementById("clock-date");
+
+    if (timeEl) timeEl.textContent = timeString;
+    if (dateEl) dateEl.textContent = dateString;
+}
+
+// --- SEARCH HANDLING ---
+function handleSearch(val) {
+    if (!val) return;
+
+    // Redirect to your Scramjet page with query
+    const searchUrl = `/scramjet/index.html?q=${encodeURIComponent(val)}`;
+    window.location.href = searchUrl;
+}
+
+// Bind search input
+const searchInput = document.getElementById("home-search") || document.getElementById("address-input");
+if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            handleSearch(e.target.value);
+            e.target.value = "";
+            e.preventDefault();
+        }
+    });
+
+    searchInput.addEventListener("focus", function() { this.select(); });
+}
+
+// --- APPS ---
 function renderApps() {
     const grid = document.getElementById("app-grid");
+    if (!grid) return;
 
-    apps.forEach(app => {
+    defaultApps.forEach((app) => {
         const el = document.createElement("div");
-        el.innerHTML = `<i class="ph ${app.icon}"></i><div>${app.name}</div>`;
-
-        // 🔥 THIS is how apps should work with Scramjet
-        el.onclick = () => {
-            const input = document.getElementById("sj-address");
-            input.value = app.url;
-
-            // trigger SAME flow as typing + enter
-            document.getElementById("sj-form").requestSubmit();
-        };
-
+        el.className = "app-shortcut";
+        el.innerHTML = `
+            <div class="app-icon-box"><i class="ph ${app.icon}"></i></div>
+            <div class="app-label">${app.name}</div>
+        `;
+        el.onclick = () => window.location.href = app.url;
         grid.appendChild(el);
     });
 }
-
-// INIT
-window.onload = () => {
-    updateClock();
-    setInterval(updateClock, 1000);
-    renderApps();
-};
-</script>
-
-</body>
+        </script>
+    </body>
 </html>
+
