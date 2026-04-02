@@ -42,20 +42,15 @@
         </div>
 
         <!-- ORIGINAL WORKING SEARCH BAR -->
-        <div class="hero animate-in delay-1">
-            <form id="sj-form">
-                <input
-                    id="sj-search-engine"
-                    value="https://www.google.com/search?q=%s"
-                    type="hidden"
-                />
-                <input
-                    id="sj-address"
-                    type="text"
-                    placeholder="Do what you want!"
-                    autocomplete="off"
-                />
-			</form>
+        <form id="sj-form">
+   		 <input id="sj-search-engine" value="https://www.google.com/search?q=%s" type="hidden" />
+   		 <input id="sj-address" type="text" placeholder="Do what you want!" autocomplete="off" />
+		</form>
+
+		<div class="desc left-margin">
+ 		   <p id="sj-error"></p>
+ 		   <pre id="sj-error-code"></pre>
+		</div>
   
         <!-- App Grid -->
         <div class="app-grid animate-in delay-2" id="app-grid"></div>
