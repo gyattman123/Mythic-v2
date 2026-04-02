@@ -37,37 +37,34 @@
             <div class="clock-date" id="clock-date">LOADING SYSTEM</div>
         </div>
 
-        <div class="search-container animate-in delay-1">
-            <div class="search-pill">
-                <i
-                    class="ph ph-magnifying-glass"
-                    style="font-size: 1.4rem; color: var(--accent-primary)"
-                ></i>
-
-                <!-- OLD LOGIC IDS HOOKED -->
+        <!-- ORIGINAL WORKING SEARCH BAR -->
+        <div class="hero">
+            <form id="sj-form">
                 <input
-                    type="text"
-                    id="sj-address"
-                    class="search-input"
-                    placeholder="Search the web or enter URL..."
-                    autocomplete="off"
-                />
-                <input
-                    type="hidden"
                     id="sj-search-engine"
                     value="https://www.google.com/search?q=%s"
+                    type="hidden"
                 />
+                <input
+                    id="sj-address"
+                    type="text"
+                    placeholder="Do what you want!"
+                    autocomplete="off"
+                />
+            </form>
 
-                <div id="loading-indicator" style="display: none">
-                    <i class="ph ph-spinner ph-spin"></i>
-                </div>
+            <div class="desc left-margin">
+                <p id="sj-error"></p>
+                <pre id="sj-error-code"></pre>
             </div>
         </div>
 
+        <!-- App Grid -->
         <div class="app-grid animate-in delay-2" id="app-grid"></div>
+
     </div>
 
-    <!-- Optional iframe if Scramjet uses it -->
+    <!-- Optional iframe for Scramjet -->
     <iframe id="sj-frame" style="display:none;"></iframe>
 
     <script>
@@ -112,5 +109,6 @@
         });
     }
     </script>
+
 </body>
 </html>
