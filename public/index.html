@@ -85,21 +85,32 @@
         document.getElementById("clock-date").textContent = dateString;
     }
 
-    function renderApps() {
-        const grid = document.getElementById("app-grid");
-        if (!grid) return;
+   function renderApps() {
+    const grid = document.getElementById("app-grid");
+    if (!grid) return;
 
-        defaultApps.forEach((app) => {
-            const el = document.createElement("div");
-            el.className = "app-shortcut";
-            el.innerHTML = `
-                <div class="app-icon-box"><i class="ph ${app.icon}"></i></div>
-                <div class="app-label">${app.name}</div>
-            `;
-            el.onclick = () => window.location.href = app.url;
-            grid.appendChild(el);
-        });
-    }
+    const sjForm = document.getElementById("sj-form");
+    const sjInput = document.getElementById("sj-address");
+
+    defaultApps.forEach((app) => {
+        const el = document.createElement("div");
+        el.className = "app-shortcut";
+        el.innerHTML = `
+            <div class="app-icon-box"><i class="ph ${app.icon}"></i></div>
+            <div class="app-label">${app.name}</div>
+        `;
+
+        el.onclick = () => {
+            // Put the app URL into the search input
+            sjInput.value = app.url;
+
+            // Programmatically submit the form (triggers existing Scramjet logic)
+            sjForm.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+        };
+
+        grid.appendChild(el);
+    });
+}
     </script>
 
 </body>
