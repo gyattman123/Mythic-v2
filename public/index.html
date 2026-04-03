@@ -87,20 +87,31 @@
     }
 
     function renderApps() {
-        const grid = document.getElementById("app-grid");
-        if (!grid) return;
+    const grid = document.getElementById("app-grid");
+    if (!grid) return;
 
-        defaultApps.forEach((app) => {
-            const el = document.createElement("div");
-            el.className = "app-shortcut";
-            el.innerHTML = `
-                <div class="app-icon-box"><i class="ph ${app.icon}"></i></div>
-                <div class="app-label">${app.name}</div>
-            `;
-            el.onclick = () => window.location.href = app.url;
-            grid.appendChild(el);
-        });
-    }
+    const iframe = document.getElementById("sj-frame");
+
+    defaultApps.forEach((app) => {
+        const el = document.createElement("div");
+        el.className = "app-shortcut";
+        el.innerHTML = `
+            <div class="app-icon-box"><i class="ph ${app.icon}"></i></div>
+            <div class="app-label">${app.name}</div>
+        `;
+
+        // Proxy click through Scramjet iframe
+        el.onclick = (e) => {
+            e.preventDefault(); // prevent normal navigation
+            iframe.src = app.url;     // set the iframe to the target
+            iframe.style.display = "block"; // optional, show iframe
+            // Optional: hide start page while iframe is active
+            document.getElementById("start-page").style.display = "none";
+        };
+
+        grid.appendChild(el);
+    });
+}
     </script>
 
 </body>
